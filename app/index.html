@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="An offline trophy guide and checklist for Grand Theft Auto VI on PlayStation 5: all 55 trophies, a 4-stage platinum roadmap, and a missable-trophy warning.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a0b2e'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23ff9f1c' font-family='sans-serif' font-weight='bold'%3ELL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+  <h1>Leonida Legend</h1>
+  <p class="tagline">The complete trophy guide and tracker for GTA VI — every trophy, every method, one missable warning, and a checklist that remembers your progress offline.</p>
+</header>
+
+<main>
+  <section class="progress-panel" id="progressPanel" aria-label="Progress">
+    <div class="progress-stats">
+      <div class="stat">
+        <span class="stat-number" id="earnedCount">0</span>
+        <span class="stat-label">trophies earned / 55</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" id="gamerscore">0</span>
+        <span class="stat-label">Gamerscore / 1,000</span>
+      </div>
+      <div class="stat stat-grades">
+        <span class="stat-number" id="gradeLine">1 Platinum &middot; 2 Gold &middot; 6 Silver &middot; 46 Bronze</span>
+        <span class="stat-label">grade breakdown</span>
+      </div>
+    </div>
+    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progressBarWrap">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <p class="progress-note" id="progressNote">Tick a trophy card to mark it earned. Your checklist is saved in this browser.</p>
+  </section>
+
+  <aside class="missable-warning" id="missableWarning" aria-label="Missable trophy warning">
+    <h2>&#9888; The one trophy you can miss</h2>
+    <p><strong>Positive Mental Attitude</strong> — meditate at every spot across Leonida — is the only missable trophy in the game.</p>
+    <p>The first meditation is the trap: <strong>Lucia&rsquo;s balcony meditation at Jason&rsquo;s house, in Chapter 1 only.</strong> After Lucia is home, check the kitchen in the morning (a morning after the mission Down to Earth is the usual time), follow her out to the balcony and accept the optional task. It is gone once Chapter 1 ends, there is no mission replay, and the trophy needs all 18 spots — so do it in Chapter 1 and keep a Chapter 1 manual save until the trophy pops.</p>
+  </aside>
+
+  <section class="roadmap" aria-label="Platinum roadmap">
+    <h2>The road to the Platinum — 4 stages</h2>
+    <ol>
+      <li><strong>Stage 1 — Play the story.</strong> Finish all five chapters and the final mission. Do Lucia&rsquo;s balcony meditation in Chapter 1, the time-sensitive Race Against Yago in Chapter 3, and keep a manual save from just before the final mission.</li>
+      <li><strong>Stage 2 — Open world &amp; activities.</strong> Bank vaults, races, stunts, shooting ranges, shops, garages and the stranger strands. Most of the grind trophies live here.</li>
+      <li><strong>Stage 3 — Collectibles &amp; 100%.</strong> Card sets, WAiNK scans, vehicles and the map. The 100% checklist (A Long Road) only appears after the story, and it is lenient — roughly 60% of everything.</li>
+      <li><strong>Stage 4 — Cleanup &amp; Platinum.</strong> Mop up whatever the in-game checklist still shows, then Vice Got a Price! pops on its own as the capstone.</li>
+    </ol>
+  </section>
+
+  <section class="controls" aria-label="Guide controls">
+    <div class="control-row">
+      <label class="search-label" for="search">Search
+        <input type="search" id="search" placeholder="Search name, description or guide&hellip;" autocomplete="off">
+      </label>
+      <label class="filter-label" for="statusFilter">Status
+        <select id="statusFilter">
+          <option value="all">All trophies</option>
+          <option value="earned">Earned</option>
+          <option value="unearned">Not earned</option>
+        </select>
+      </label>
+      <label class="spoiler-label">
+        <input type="checkbox" id="spoilerToggle" checked>
+        Hide story spoilers
+      </label>
+    </div>
+    <div class="chip-row" role="group" aria-label="Filter by kind">
+      <button type="button" class="chip chip-active" data-kind="all">All kinds</button>
+      <button type="button" class="chip" data-kind="story">Story</button>
+      <button type="button" class="chip" data-kind="missable">Missable</button>
+      <button type="button" class="chip" data-kind="collectibles">Collectibles</button>
+      <button type="button" class="chip" data-kind="activities">Activities</button>
+      <button type="button" class="chip" data-kind="online">Online</button>
+    </div>
+    <div class="control-row data-row">
+      <button type="button" id="exportBtn">Export earned (JSON)</button>
+      <label class="import-label" for="importFile">Import earned (JSON)</label>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <button type="button" id="clearBtn">Clear checklist</button>
+      <span class="result-count" id="resultCount">Showing 55 of 55 trophies</span>
+    </div>
+  </section>
+
+  <section class="grid" id="grid" aria-live="polite" aria-label="Trophy list"></section>
+  <p class="empty-message" id="emptyMessage" hidden>No trophies match your filters. Try clearing the search or choosing another kind.</p>
+</main>
+
+<footer class="sources">
+  <h2>Sources</h2>
+  <p>Official trophy names, descriptions and grades are as PlayStation publishes them, cross-checked on 19 November 2026 between OutputLag (outputlag.com/guides/gta-6-trophy-list), Push Square (pushsquare.com/guides/gta-6-trophy-guide-and-roadmap), RadioTimes and PlayDay — all four agree on every name, description and grade. Each trophy card names the sources its guide is written from. Five methods are unconfirmed at launch and are marked as such on their cards. This guide works fully offline; no data leaves your browser.</p>
+</footer>
+
+<script src="data/trophies-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
