@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Tracker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1026'/%3E%3Ccircle cx='16' cy='14' r='7' fill='%23ff6b4a'/%3E%3Crect x='6' y='22' width='20' height='3' fill='%2322e6ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Leonida Legend</h1>
+  <p class="sub">A complete, offline guide and tracker for all 55 GTA VI trophies on PlayStation 5. No server, no network — open this file and play.</p>
+</header>
+<main>
+  <section class="panel" id="progress-panel" aria-label="Your progress">
+    <h2>Your progress</h2>
+    <p class="big" id="progress-count">0 / 55 trophies earned</p>
+    <div class="bar" role="progressbar" aria-label="Trophies earned" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progress-bar"><span id="progress-fill"></span></div>
+    <p id="grade-line">Platinum 0/1 &middot; Gold 0/2 &middot; Silver 0/6 &middot; Bronze 0/46</p>
+    <p id="score-line">Gamerscore earned: 0 / 1,000</p>
+  </section>
+
+  <section class="warn" id="missable-box">
+    <h2>Read this first: the one missable trophy</h2>
+    <p><strong>Positive Mental Attitude</strong> — meditate at every spot across Leonida. There are 18 meditation spots, and the Chapter 1 spot at Jason&rsquo;s house / Lucia&rsquo;s balcony disappears after Chapter 1, so meditate there before finishing the chapter, and keep manual saves. This is the only trophy reported as possibly missable.</p>
+    <p>Five methods are unconfirmed — no guide has published verified steps for them yet: <em>In The Beginning&hellip;</em>, <em>Capital Offense</em>, <em>Bad Luck, I Guess</em>, <em>The Truth Is Out There</em> and <em>Ten Pin</em>. Their cards are marked METHOD UNCONFIRMED and do not guess.</p>
+  </section>
+
+  <section class="panel" id="roadmap">
+    <h2>Roadmap to the platinum</h2>
+    <p class="note">Four stages, in order. Work through them and the platinum follows.</p>
+    <div id="roadmap-stages"></div>
+  </section>
+
+  <section class="panel" id="controls">
+    <h2>Find a trophy</h2>
+    <label class="field">Search
+      <input id="search" type="search" placeholder="Search by name, description or guide&hellip;" aria-label="Search trophies">
+    </label>
+    <label class="field">Status
+      <select id="status-filter" aria-label="Filter by earned status">
+        <option value="all">All trophies</option>
+        <option value="earned">Earned only</option>
+        <option value="unearned">Not earned yet</option>
+      </select>
+    </label>
+    <div class="chips" id="kind-chips" role="group" aria-label="Filter by kind"></div>
+    <label class="spoiler">
+      <input type="checkbox" id="spoiler-toggle" checked>
+      Spoiler-free: hide story trophy names and descriptions until earned
+    </label>
+    <div class="actions">
+      <button id="export-btn" type="button">Export progress (JSON)</button>
+      <button id="import-btn" type="button">Import progress (JSON)</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+      <button id="clear-btn" type="button">Clear progress</button>
+    </div>
+    <p id="import-note" class="note" aria-live="polite"></p>
+    <p class="note">All 55 trophies are single-player — there are no online trophies.</p>
+  </section>
+
+  <p id="showing-line">Showing 55 of 55 trophies</p>
+  <section id="trophy-list" aria-label="Trophy list"></section>
+</main>
+<footer>
+  <p>Sources: planetgta6.com, Exophase, PSNProfiles, KeenGamer, PowerPyx. Official trophy names and descriptions are as PlayStation publishes them; every guide is written in our own words and cites its sources. This guide works fully offline — it loads no network resources.</p>
+</footer>
+<script src="data/trophies-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
