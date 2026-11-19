@@ -1,39 +1,46 @@
-// Leonida Legend — GTA VI trophy guide: the entry program.
+// GTA 6 Trophy Guide — the entrypoint that hands the guide in.
 //
-// Copies app/ and screenshots/ from this repository into the output
-// directory, then writes dossier.json there with buildDossier from
-// vendor/makefun-frontend.ts. Outside the grader, MAKEFUN_OUTPUT_DIR
-// stands in for /output. Node 22, standard library only. The program
-// runs twice and writes the same bytes both times: it wipes the output
-// trees it owns before copying, and buildDossier is deterministic.
+// It takes the static app and the screenshots from beside this file, puts
+// them in the output directory, and writes the dossier that buildDossier
+// computes from them. Node 22, standard library only: nothing is installed,
+// nothing is built, and the same input always writes the same bytes.
 
 import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { join } from 'node:path';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
-const repoRoot = fileURLToPath(new URL('.', import.meta.url));
-const outputDir = process.env.MAKEFUN_OUTPUT_DIR || '/output';
+// The grader hands us /output; outside it MAKEFUN_OUTPUT_DIR stands in.
+const outDir = resolve(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
 
-const appOut = join(outputDir, 'app');
-const shotsOut = join(outputDir, 'screenshots');
+// This file sits at the repository root, so the app and the screenshots live
+// beside it.
+const repoRoot = dirname(fileURLToPath(import.meta.url));
 
-mkdirSync(outputDir, { recursive: true });
-rmSync(appOut, { recursive: true, force: true });
-rmSync(shotsOut, { recursive: true, force: true });
+// The bounty's caps: the dossier text is 160 KiB, screenshots are 3 or 4
+// images of at most 256 KiB, and the app is at most 993 entries and 16 MiB.
+// Only the text cap shapes the bytes; the rest only refuse, so these match
+// the gate and the entry fails here exactly where the scorer would refuse it.
+const caps = {
+  text_max_bytes: 163840,
+  screenshots: { max: 4, max_bytes: 262144 },
+  app_max_files: 993,
+  app_max_bytes: 16777216,
+};
 
-cpSync(join(repoRoot, 'app'), appOut, { recursive: true });
+// Start from an empty output directory, so a second run writes the same
+// bytes as the first instead of leaving a stale file behind.
+rmSync(outDir, { recursive: true, force: true });
+mkdirSync(outDir, { recursive: true });
+
+// Hand in the app and its screenshots. Either one missing is buildDossier's
+// refusal to report, not a copy error, so only copy what is there.
+if (existsSync(join(repoRoot, 'app'))) {
+  cpSync(join(repoRoot, 'app'), join(outDir, 'app'), { recursive: true });
+}
 if (existsSync(join(repoRoot, 'screenshots'))) {
-  cpSync(join(repoRoot, 'screenshots'), shotsOut, { recursive: true });
+  cpSync(join(repoRoot, 'screenshots'), join(outDir, 'screenshots'), { recursive: true });
 }
 
-writeFileSync(
-  join(outputDir, 'dossier.json'),
-  buildDossier(outputDir, {
-    text_max_bytes: 163840,
-    screenshots: { max: 4, max_bytes: 262144 },
-    app_max_files: 993,
-    app_max_bytes: 50331648,
-    app_path_max_bytes: 1000
-  })
-);
+// The dossier, built from the output directory exactly as the scorer builds it.
+writeFileSync(join(outDir, 'dossier.json'), buildDossier(outDir, caps));
