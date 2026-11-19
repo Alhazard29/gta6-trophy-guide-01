@@ -3,7 +3,7 @@
 // this file turns each key into the source's full name and the page a reader
 // can open to check it. Links are plain anchors: the app fetches nothing.
 
-export const GUIDE_SOURCES = {
+window.GUIDE_SOURCES = {
   gtavice: {
     name: 'GTAVice — Trophies & Achievements',
     url: 'https://www.gtavice.net/guides/trophies-and-achievements',
@@ -17,6 +17,6 @@ export const GUIDE_SOURCES = {
 // The official list itself, as PlayStation publishes it, was checked against
 // both sources above: they agree on every one of the 55 names, descriptions
 // and grades (1 Platinum, 2 Gold, 6 Silver, 46 Bronze).
-export const OFFICIAL_LIST_NOTE =
+window.OFFICIAL_LIST_NOTE =
   'Official names, descriptions and grades as published on PlayStation, ' +
   'cross-checked on GTAVice and KeenGamer.';

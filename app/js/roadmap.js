@@ -4,7 +4,7 @@
 // means trophies whose official description asks for a set of things found
 // across Leonida (spots, locations, vehicles, card sets, properties).
 
-export const ROADMAP_STAGES = [
+window.ROADMAP_STAGES = [
   {
     title: 'Play the story — Chapters 1 to 4 and the final mission',
     blurb:
@@ -125,7 +125,7 @@ export const ROADMAP_STAGES = [
 
 // Trophy ids whose official description asks for a collection of things found
 // across Leonida — the "Collectibles" filter.
-export const COLLECTIBLE_IDS = new Set([
+window.COLLECTIBLE_IDS = new Set([
   'positive-mental-attitude',
   'dont-touch-my-deck',
   'you-wainker',

@@ -1,10 +1,18 @@
 // Leonida Legend — GTA 6 trophy guide & tracker.
-// Loads app/data/trophies.json (the only fetch, a file of this app), renders
-// the checklist, the roadmap and the filters, and saves progress in
-// localStorage. No network request is ever made.
+// Classic scripts (no ES modules, no fetch needed): the trophy data is
+// loaded from window.TROPHIES_DATA, set by js/trophies-data.js, which is
+// generated from app/data/trophies.json. That keeps the guide working when
+// index.html is opened directly via file:// (where fetch of a local JSON
+// file is blocked by CORS) as well as when served over HTTP — if the
+// embedded data is ever missing, it falls back to fetching
+// data/trophies.json. Renders the checklist, the roadmap and the filters,
+// and saves progress in localStorage. No network request is ever made
+// when the embedded data is present.
 
-import { GUIDE_SOURCES } from './sources.js';
-import { ROADMAP_STAGES, COLLECTIBLE_IDS } from './roadmap.js';
+// Globals set by the classic scripts loaded before this one.
+const GUIDE_SOURCES = window.GUIDE_SOURCES;
+const ROADMAP_STAGES = window.ROADMAP_STAGES;
+const COLLECTIBLE_IDS = window.COLLECTIBLE_IDS;
 
 const STORAGE_KEY = 'gta6-trophy-guide-v1';
 const DATA_URL = 'data/trophies.json';
@@ -466,7 +474,17 @@ function wireControls() {
   });
 }
 
-async function loadTrophyData() {
+function loadEmbeddedTrophyData() {
+  // Preferred path: data embedded as a classic script, works via file://.
+  const data = window.TROPHIES_DATA;
+  if (!Array.isArray(data) || data.length !== 55) return false;
+  trophies = data;
+  byId = new Map(trophies.map((trophy) => [trophy.id, trophy]));
+  return true;
+}
+
+async function loadTrophyDataFromFetch() {
+  // Fallback when served over HTTP and the embedded data is missing.
   const response = await fetch(DATA_URL);
   if (!response.ok) throw new Error('Could not load ' + DATA_URL);
   const data = await response.json();
@@ -475,6 +493,11 @@ async function loadTrophyData() {
     throw new Error('Expected 55 trophies, got ' + trophies.length);
   }
   byId = new Map(trophies.map((trophy) => [trophy.id, trophy]));
+}
+
+async function loadTrophyData() {
+  if (loadEmbeddedTrophyData()) return;
+  await loadTrophyDataFromFetch();
 }
 
 async function initGuide() {
@@ -486,8 +509,8 @@ async function initGuide() {
     trophyCardsEl.textContent = '';
     emptyStateEl.hidden = false;
     emptyStateEl.textContent =
-      'The trophy list could not be loaded. Open this guide from its own files ' +
-      '(serve app/ with a static server) and try again.';
+      'The trophy list could not be loaded. The guide files may be incomplete — ' +
+      'check that js/trophies-data.js sits next to this page and try again.';
     return;
   }
   renderAll();
